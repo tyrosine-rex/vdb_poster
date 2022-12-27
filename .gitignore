@@ -1,5 +1,5 @@
-/data/*
-/res/*
+data/*
+db/*
 .vscode/*
 **/.ipynb_checkpoints
 **/.DS_Store
