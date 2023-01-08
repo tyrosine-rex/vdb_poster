@@ -1,0 +1,9 @@
+#paths where datas are stored
+dataset = "data/VDB_16S_dataset.txt"
+metadata = "data/VDB_16S_metadata.txt"
+
+#column which contain phylogenetic informations for each OTU
+phylo_col = "ConsensusLineage"
+
+#path where to build database
+db = "db/metagenomics.sqlite"
