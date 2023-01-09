@@ -17,6 +17,7 @@ taxa_colnames = [
     "specie"
 ]
 
+#sql code to create tables
 [tables]
     Taxa = """
     CREATE TABLE Taxa (
