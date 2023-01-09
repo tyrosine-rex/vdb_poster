@@ -11,8 +11,52 @@ taxa_colnames = [
     "reign",
     "phylum",
     "class",
-    "order",
+    "_order",
     "family",
     "genus",
     "specie"
 ]
+
+[tables]
+    Taxa = """
+    CREATE TABLE Taxa (
+        OTU_ID INTEGER,
+        reign TEXT,
+        phylum TEXT,
+        class TEXT,
+        _order TEXT,
+        family TEXT,
+        genus TEXT, 
+        specie TEXT,
+
+        PRIMARY KEY (OTU_ID)
+    ) WITHOUT ROWID;
+    """
+
+    Samples = """
+    CREATE TABLE Samples (
+        SAMPLE_ID INTEGER,
+        gender TEXT, 
+        floor TEXT,
+        building TEXT, 
+        surface TEXT,
+
+        PRIMARY KEY (SAMPLE_ID)
+    ) WITHOUT ROWID;
+    """
+
+    Counts = """ 
+    CREATE TABLE Counts (
+        OTU_ID INTEGER,
+        SAMPLE_ID INTEGER,
+        abs_count INTEGER,
+        rel_count REAL,
+
+        FOREIGN KEY (OTU_ID) 
+            REFERENCES Taxa(OTU_ID),
+        FOREIGN KEY (SAMPLE_ID)
+            REFERENCES Samples(SAMPLE_ID),
+
+        PRIMARY Key (OTU_ID, SAMPLE_ID)
+    ) WITHOUT ROWID;
+    """
