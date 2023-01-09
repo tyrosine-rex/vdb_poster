@@ -48,9 +48,9 @@ def init_database(db_path, tables):
 
 def populate_database(db_path, taxa, counts, samples):
     with connect(db_path) as conn:
-        taxa.to_sql("Taxa", conn, if_exists="append")
-        counts.to_sql("Counts", conn, if_exists="append")
-        samples.to_sql("Samples", conn, if_exists="append")
+        taxa.to_sql("Taxa", conn)
+        counts.to_sql("Counts", conn)
+        samples.to_sql("Samples", conn)
 
 
 def main():
