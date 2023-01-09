@@ -12,16 +12,16 @@ def load_taxa(df, taxa_info, taxa_colnames):
     taxa = df[taxa_info].str \
         .split(";", expand=True) \
         .replace(".__|^ ", "", regex=True) \
-        .apply(lambda x:x.str.lower()) \
+        .apply(lambda x:  x.str.lower()) \
         .rename_axis("OTU_ID") \
-        .rename(columns={i:c for i, c in enumerate(taxa_colnames)})
+        .rename(columns={i: c for i, c in enumerate(taxa_colnames)})
     return taxa
 
 
 def load_samples(df):
     samples = df.rename_axis("SAMPLE_ID") \
-        .apply(lambda x:x.str.lower()) \
-        .rename(columns={i:i.lower() for i in df.columns}) 
+        .apply(lambda x: x.str.lower()) \
+        .rename(columns={i: i.lower() for i in df.columns})
     return samples
 
 
@@ -51,7 +51,7 @@ def populate_database(db_path, taxa, counts, samples):
         taxa.to_sql("Taxa", conn, if_exists="append")
         counts.to_sql("Counts", conn, if_exists="append")
         samples.to_sql("Samples", conn, if_exists="append")
-   
+
 
 def main():
     # load config data
@@ -62,7 +62,7 @@ def main():
     taxa_info = config["taxa_info"]
     taxa_colnames = config["taxa_colnames"]
     tables = config["tables"]
-    
+
     # read datas
     dataset = read_csv(dataset_path, sep="\t", index_col=0)
     metadata = read_csv(metadata_path, sep="\t", index_col=0)
@@ -84,5 +84,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
