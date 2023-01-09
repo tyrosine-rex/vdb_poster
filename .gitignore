@@ -1,5 +1,6 @@
 data/*
 db/*
+draft/*
 .vscode/*
 **/.ipynb_checkpoints
 **/.DS_Store
