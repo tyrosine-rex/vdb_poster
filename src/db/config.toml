@@ -2,8 +2,17 @@
 dataset = "data/VDB_16S_dataset.txt"
 metadata = "data/VDB_16S_metadata.txt"
 
-#column which contain phylogenetic informations for each OTU
-phylo_col = "ConsensusLineage"
-
 #path where to build database
 db = "db/metagenomics.sqlite"
+
+#column which contain phylogenetic informations for each OTU
+taxa_info = "ConsensusLineage"
+taxa_colnames = [
+    "reign",
+    "phylum",
+    "class",
+    "order",
+    "family",
+    "genus",
+    "specie"
+]
