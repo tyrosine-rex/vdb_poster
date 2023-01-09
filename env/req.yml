@@ -1,4 +1,4 @@
-name: vdb_poster_prod
+name: vdb_poster
 channels:
   - conda-forge
 dependencies:
