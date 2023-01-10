@@ -5,7 +5,7 @@ from pandas import read_csv
 from sqlite3 import connect
 
 
-CONFIG = "src/config/config.toml"
+CONFIG = "src/config.toml"
 TABLES_CONFIG = "src/db/tables.toml"
 
 
