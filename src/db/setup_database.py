@@ -13,6 +13,7 @@ def load_taxa(df, taxa_info, taxa_colnames):
     taxa = df[taxa_info].str \
         .split(";", expand=True) \
         .replace(".__|^ ", "", regex=True) \
+        .replace("\(.*\)", "", regex=True) \
         .apply(lambda x:  x.str.lower()) \
         .rename_axis("OTU_ID") \
         .rename(columns={i: c for i, c in enumerate(taxa_colnames)})
