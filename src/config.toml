@@ -1,0 +1,6 @@
+#paths where datas are stored
+dataset = "data/VDB_16S_dataset.txt"
+metadata = "data/VDB_16S_metadata.txt"
+
+#path where to build database
+db = "db/metagenomics.sqlite"
