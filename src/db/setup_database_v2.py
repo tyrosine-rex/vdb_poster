@@ -4,6 +4,7 @@ from sqlite3 import connect
 
 
 CONFIG = "src/config.toml"
+TABLES = "src/db/tables.toml"
 
 
 def make_samples_df(metadata):
@@ -78,7 +79,8 @@ def init_database(db_path, tables):
 def main():
     # load config
     config = load_toml(CONFIG)
-    
+    tables = load_toml(TABLES)
+
     # load path from config
     db_path = config["db2"]
     dataset_path = config["dataset"]
