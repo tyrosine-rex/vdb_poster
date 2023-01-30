@@ -1,5 +1,6 @@
 from toml import load as load_toml
 from pandas import read_csv
+from sqlite3 import connect
 
 
 CONFIG = "src/config.toml"
@@ -17,7 +18,7 @@ def make_samples_df(metadata):
     
 
 def make_taxa_df(dataset):
-    taxa_colnames = ["reign", "phylum", "class", "order", "family", "genus", "specie"]
+    taxa_colnames = ["reign", "phylum", "class", "_order", "family", "genus", "specie"]
     return dataset \
         .set_index("#OTU ID") \
         .rename_axis("OTU_ID", axis="index") \
@@ -85,7 +86,7 @@ def main():
     taxa = make_taxa_df(dataset)
     counts_abs = make_counts_df(dataset)
     counts_rel = make_counts_rel_df(counts_abs)
-    counts = make_melted_counts(counts_abs, counts_rel)
+    melted_counts = make_melted_counts(counts_abs, counts_rel)
 
 
 
