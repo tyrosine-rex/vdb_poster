@@ -55,13 +55,13 @@ def make_counts_rel_df(counts_abs):
 
 def make_melted_counts(counts_abs, counts_rel):
     melted_counts_abs = counts_abs \
-        .melt(ignore_index=False, var_name="SAMPLE_ID", value_name="count_abs") \
+        .melt(ignore_index=False, var_name="SAMPLE_ID", value_name="abs_count") \
         .reset_index() \
         .set_index(["OTU_ID", "SAMPLE_ID"]) \
         .rename_axis("COUNTS", axis="columns")
 
     melted_counts_rel = counts_rel \
-        .melt(ignore_index=False, var_name="SAMPLE_ID", value_name="count_rel") \
+        .melt(ignore_index=False, var_name="SAMPLE_ID", value_name="rel_count") \
         .reset_index() \
         .set_index(["OTU_ID", "SAMPLE_ID"]) \
         .rename_axis("COUNTS", axis="columns")
@@ -103,13 +103,22 @@ def main():
     counts_rel = make_counts_rel_df(counts_abs)
     melted_counts = make_melted_counts(counts_abs, counts_rel)
 
-    # export df to parquet format
-    
-
+    # export df to pickle format
+    samples.to_pickle(f"{pkl_dir}/samples.pkl")
+    taxa.to_pickle(f"{pkl_dir}/taxa.pkl")
+    counts_abs.to_pickle(f"{pkl_dir}/counts_abs.pkl")
+    counts_rel.to_pickle(f"{pkl_dir}/counts_rel.pkl")
+    melted_counts.to_pickle(f"{pkl_dir}/melted_counts.pkl")
 
     # init database
     init_database(db_path, tables)
 
+    # populate database
+    with connect(db_path) as conn: 
+        taxa.to_sql("Taxa", conn, if_exists="append") # append to keep constraints from 'init_database()'
+        melted_counts.to_sql("Counts", conn, if_exists="append")
+        samples.to_sql("Samples", conn, if_exists="append")
+        conn.commit()
 
 
 if __name__ == "__main__":
