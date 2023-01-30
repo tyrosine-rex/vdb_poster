@@ -43,6 +43,12 @@ def make_counts_df(dataset):
         .copy()
 
 
+def make_counts_rel_df(counts):
+    return counts \
+        .divide(counts.sum(), axis="columns") \
+        .copy()
+
+
 def main():
     # load config
     config = load_toml(CONFIG)
@@ -58,7 +64,9 @@ def main():
 
     samples = make_samples_df(metadata)
     taxa = make_taxa_df(dataset)
-    counts= make_counts_df(dataset)
+    counts = make_counts_df(dataset)
+    
+    counts_rel = make_counts_rel_df(counts)
 
 
 if __name__ == "__main__":
