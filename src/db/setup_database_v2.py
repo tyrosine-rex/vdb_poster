@@ -6,13 +6,32 @@ CONFIG = "src/config.toml"
 
 
 def make_samples_df(metadata):
-    return metadata.set_index("SampleID") \
+    return metadata \
+        .set_index("SampleID") \
         .rename_axis("SAMPLE_ID", axis="index") \
         .rename_axis("WC", axis="columns") \
         .apply(lambda x: x.str.lower()) \
         .rename(columns={i: i.lower() for i in metadata.columns}) \
-        .astype("category")
+        .astype("category") \
+        .copy()
     
+
+def make_taxa_df(dataset):
+    taxa_colnames = ["reign", "phylum", "class", "order", "family", "genus", "specie"]
+    return dataset \
+        .set_index("#OTU ID") \
+        .rename_axis("OTU_ID", axis="index") \
+        .get("ConsensusLineage") \
+        .str.lower() \
+        .str.split(";", expand=True) \
+        .replace(".__|\(.*\)", "", regex=True) \
+        .replace("^ | $", "", regex=True) \
+        .replace("", None, regex=True) \
+        .rename_axis("RANK", axis="columns") \
+        .rename(columns={i: c for i, c in enumerate(taxa_colnames)}) \
+        .astype("category") \
+        .copy()
+
 
 def main():
     # load config
@@ -28,6 +47,7 @@ def main():
     metadata = read_csv(metadata_path, sep="\t")
 
     samples = make_samples_df(metadata)
+    taxa = make_taxa_df(dataset)
 
 
 if __name__ == "__main__":
