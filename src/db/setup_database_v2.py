@@ -89,7 +89,7 @@ def main():
     tables = load_toml(TABLES)
 
     # load path from config
-    db_path = config["db2"]
+    db_path = config["db"]
     dataset_path = config["dataset"]
     metadata_path = config["metadata"]
     pkl_dir = config["pickle"]
