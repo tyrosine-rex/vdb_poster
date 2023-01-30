@@ -4,3 +4,4 @@ metadata = "data/VDB_16S_metadata.txt"
 
 #path where to build database
 db = "db/metagenomics.sqlite"
+db2= "db/metagenomics2.sqlite"
