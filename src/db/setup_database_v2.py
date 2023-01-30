@@ -43,9 +43,27 @@ def make_counts_df(dataset):
         .copy()
 
 
-def make_counts_rel_df(counts):
-    return counts \
-        .divide(counts.sum(), axis="columns") \
+def make_counts_rel_df(counts_abs):
+    return counts_abs \
+        .divide(counts_abs.sum(), axis="columns") \
+        .copy()
+
+
+def make_melted_counts(counts_abs, counts_rel):
+    melted_counts_abs = counts_abs \
+        .melt(ignore_index=False, var_name="SAMPLE_ID", value_name="count_abs") \
+        .reset_index() \
+        .set_index(["OTU_ID", "SAMPLE_ID"]) \
+        .rename_axis("COUNTS", axis="columns")
+
+    melted_counts_rel = counts_rel \
+        .melt(ignore_index=False, var_name="SAMPLE_ID", value_name="count_rel") \
+        .reset_index() \
+        .set_index(["OTU_ID", "SAMPLE_ID"]) \
+        .rename_axis("COUNTS", axis="columns")
+
+    return melted_counts_abs \
+        .merge(melted_counts_rel, on=["OTU_ID", "SAMPLE_ID"]) \
         .copy()
 
 
@@ -62,11 +80,14 @@ def main():
     dataset = read_csv(dataset_path, sep="\t")
     metadata = read_csv(metadata_path, sep="\t")
 
+    # make df
     samples = make_samples_df(metadata)
     taxa = make_taxa_df(dataset)
-    counts = make_counts_df(dataset)
-    
-    counts_rel = make_counts_rel_df(counts)
+    counts_abs = make_counts_df(dataset)
+    counts_rel = make_counts_rel_df(counts_abs)
+    counts = make_melted_counts(counts_abs, counts_rel)
+
+
 
 
 if __name__ == "__main__":
