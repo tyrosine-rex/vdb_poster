@@ -58,13 +58,15 @@ def make_melted_counts(counts_abs, counts_rel):
         .melt(ignore_index=False, var_name="SAMPLE_ID", value_name="abs_count") \
         .reset_index() \
         .set_index(["OTU_ID", "SAMPLE_ID"]) \
-        .rename_axis("COUNTS", axis="columns")
+        .rename_axis("COUNTS", axis="columns") \
+        .copy()
 
     melted_counts_rel = counts_rel \
         .melt(ignore_index=False, var_name="SAMPLE_ID", value_name="rel_count") \
         .reset_index() \
         .set_index(["OTU_ID", "SAMPLE_ID"]) \
-        .rename_axis("COUNTS", axis="columns")
+        .rename_axis("COUNTS", axis="columns") \
+        .copy()
 
     return melted_counts_abs \
         .merge(melted_counts_rel, on=["OTU_ID", "SAMPLE_ID"]) \
