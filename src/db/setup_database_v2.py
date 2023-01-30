@@ -90,6 +90,7 @@ def main():
     db_path = config["db2"]
     dataset_path = config["dataset"]
     metadata_path = config["metadata"]
+    pkl_dir = config["pickle"]
 
     # load csv
     dataset = read_csv(dataset_path, sep="\t")
@@ -101,6 +102,10 @@ def main():
     counts_abs = make_counts_df(dataset)
     counts_rel = make_counts_rel_df(counts_abs)
     melted_counts = make_melted_counts(counts_abs, counts_rel)
+
+    # export df to parquet format
+    
+
 
     # init database
     init_database(db_path, tables)
