@@ -33,6 +33,16 @@ def make_taxa_df(dataset):
         .copy()
 
 
+def make_counts_df(dataset):
+    return dataset \
+        .set_index("#OTU ID") \
+        .rename_axis("OTU_ID", axis="index") \
+        .rename_axis("SAMPLE_ID", axis="columns") \
+        .drop("ConsensusLineage", axis="columns") \
+        .astype("uint16") \
+        .copy()
+
+
 def main():
     # load config
     config = load_toml(CONFIG)
@@ -48,6 +58,7 @@ def main():
 
     samples = make_samples_df(metadata)
     taxa = make_taxa_df(dataset)
+    counts= make_counts_df(dataset)
 
 
 if __name__ == "__main__":
