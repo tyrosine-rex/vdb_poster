@@ -1,6 +1,8 @@
 from toml import load as load_toml
 from pandas import read_csv
 from sqlite3 import connect
+from os import remove
+from os.path import exists
 
 
 CONFIG = "src/config.toml"
@@ -70,6 +72,9 @@ def make_melted_counts(counts_abs, counts_rel):
 
 
 def init_database(db_path, tables):
+    if exists(db_path):
+        remove(db_path)
+
     for sql in tables.values():
         with connect(db_path) as conn:
             conn.execute(sql)
@@ -97,6 +102,8 @@ def main():
     counts_rel = make_counts_rel_df(counts_abs)
     melted_counts = make_melted_counts(counts_abs, counts_rel)
 
+    # init database
+    init_database(db_path, tables)
 
 
 
