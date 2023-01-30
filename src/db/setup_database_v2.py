@@ -68,6 +68,13 @@ def make_melted_counts(counts_abs, counts_rel):
         .copy()
 
 
+def init_database(db_path, tables):
+    for sql in tables.values():
+        with connect(db_path) as conn:
+            conn.execute(sql)
+            conn.commit()
+
+
 def main():
     # load config
     config = load_toml(CONFIG)
