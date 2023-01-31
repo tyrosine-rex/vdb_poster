@@ -43,7 +43,7 @@ def make_counts_df(dataset):
         .rename_axis("OTU_ID", axis="index") \
         .rename_axis("SAMPLE_ID", axis="columns") \
         .drop("ConsensusLineage", axis="columns") \
-        .astype("uint16") \
+        .astype("int64") \
         .copy()
 
 
@@ -66,6 +66,7 @@ def make_melted_counts(counts_abs, counts_rel):
         .reset_index() \
         .set_index(["OTU_ID", "SAMPLE_ID"]) \
         .rename_axis("COUNTS", axis="columns") \
+        .astype("float64") \
         .copy()
 
     return melted_counts_abs \
