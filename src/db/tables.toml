@@ -20,6 +20,7 @@ CREATE TABLE Samples (
     floor TEXT,
     building TEXT, 
     surface TEXT,
+    depth INTEGER,
 
     PRIMARY KEY (SAMPLE_ID)
 ) WITHOUT ROWID;
