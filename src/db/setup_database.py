@@ -47,6 +47,16 @@ def make_counts_df(dataset):
         .copy()
 
 
+def add_depth_column(samples, counts_abs):
+    return samples \
+        .merge(
+            counts_abs \
+                .sum(axis="index") \
+                .to_frame(name="depth"),
+            on="SAMPLE_ID"
+        )
+
+
 def make_counts_rel_df(counts_abs):
     return counts_abs \
         .divide(counts_abs.sum(), axis="columns") \
@@ -105,6 +115,7 @@ def main():
     counts_abs = make_counts_df(dataset)
     counts_rel = make_counts_rel_df(counts_abs)
     melted_counts = make_melted_counts(counts_abs, counts_rel)
+    samples = add_depth_column(samples, counts_abs)
 
     # export df to pickle format
     samples.to_pickle(f"{pkl_dir}/samples.pkl")
