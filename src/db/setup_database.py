@@ -43,8 +43,18 @@ def make_counts_df(dataset):
         .rename_axis("OTU_ID", axis="index") \
         .rename_axis("SAMPLE_ID", axis="columns") \
         .drop("ConsensusLineage", axis="columns") \
-        .astype("uint16") \
+        .astype("int64") \
         .copy()
+
+
+def add_depth_column(samples, counts_abs):
+    return samples \
+        .merge(
+            counts_abs \
+                .sum(axis="index") \
+                .to_frame(name="depth"),
+            on="SAMPLE_ID"
+        )
 
 
 def make_counts_rel_df(counts_abs):
@@ -66,6 +76,7 @@ def make_melted_counts(counts_abs, counts_rel):
         .reset_index() \
         .set_index(["OTU_ID", "SAMPLE_ID"]) \
         .rename_axis("COUNTS", axis="columns") \
+        .astype("float64") \
         .copy()
 
     return melted_counts_abs \
@@ -104,6 +115,7 @@ def main():
     counts_abs = make_counts_df(dataset)
     counts_rel = make_counts_rel_df(counts_abs)
     melted_counts = make_melted_counts(counts_abs, counts_rel)
+    samples = add_depth_column(samples, counts_abs)
 
     # export df to pickle format
     samples.to_pickle(f"{pkl_dir}/samples.pkl")
