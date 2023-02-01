@@ -16,7 +16,7 @@ def make_samples_df(metadata):
         .rename_axis("WC", axis="columns") \
         .apply(lambda x: x.str.lower()) \
         .rename(columns={i: i.lower() for i in metadata.columns}) \
-        .astype("category") \
+        .astype("string") \
         .copy()
     
 
@@ -33,7 +33,7 @@ def make_taxa_df(dataset):
         .replace("", None, regex=True) \
         .rename_axis("RANK", axis="columns") \
         .rename(columns={i: c for i, c in enumerate(taxa_colnames)}) \
-        .astype("category") \
+        .astype("string") \
         .copy()
 
 
