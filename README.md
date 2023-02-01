@@ -11,6 +11,8 @@ conda activate vdb_poster_ravy_thomas
 python -m ipykernel install --user --name vdb_poster_ravy_thomas
 ```
 
+## Data
+place `VDB_16S_dataset.txt` and `VDB_16S_metadata.txt` file inside `data` directory
 
 ## Create database
 
