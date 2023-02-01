@@ -33,3 +33,18 @@ Lancez streamlit avec
 ```bash
 python -m streamlit run src/streamlit/app.py
 ```
+
+## notebook 
+
+Le notebook est situé ici 
+
+```bash
+jupyter nbconvert src/notebook/rendu_notebook_ravy_lahaie.ipynb
+```
+
+il utilise des widgets donc pensé à faire ceci :
+```bash
+jupyter nbextension enable --py --sys-prefix widgetsnbextension  
+```
+
+NB: marche mieux sur vscode mais l'affichage est moins bien
