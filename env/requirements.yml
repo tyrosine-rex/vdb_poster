@@ -1,9 +1,14 @@
-name: vdb_poster
+name: vdb_poster_ravy_thomas
 channels:
   - conda-forge
 dependencies:
-  - python=3.9
+  - python=3.8
   - ipykernel
+  - ipywidgets
   - jupyter
   - pandas
   - toml
+  - plotly
+  - matplotlib
+  - seaborn
+  - sklearn
