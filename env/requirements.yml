@@ -7,8 +7,9 @@ dependencies:
   - ipywidgets
   - jupyter
   - pandas
+  - streamlit
   - toml
   - plotly
   - matplotlib
   - seaborn
-  - sklearn
+  - scikit-learn
