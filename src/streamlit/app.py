@@ -2,6 +2,7 @@ import streamlit as st
 import utils.plots as plot
 from  utils.barplot_custom import barplot_custom 
 from utils.data_loader import data_loader
+from utils.euclid_mds import plot_mds
 from toml import load as toml_load
 
 CONFIG = toml_load("src/config.toml")
@@ -128,13 +129,27 @@ def page_6():
     st.plotly_chart(Fig6)
 
 
+def page_7():
+    st.write("Multidimensional scaling base on euclidean matrix between samples")
+
+    color_choice = st.radio(
+        "Selectionnez une classe d'echantillon",
+        ("surface", "gender", "floor", "building", "isFloor")
+    )
+
+    Fig7 = plot_mds(melted, samples, color_choice)
+    st.plotly_chart(Fig7)
+
+
+
 page_names_to_funcs = {
     "Main Page": main,
     "Barplot": page_2,
     "Treemap/Sunburst": page_3,
-    "PCA": page_4,
+    "PCA 3D": page_4,
     "Heatmap": page_5,
-    "Barplot interractif" : page_6
+    "Barplot interractif" : page_6, 
+    "euclidean MDS" : page_7
 }
 
 list_page = [main,page_2,page_3,page_4,page_5]
